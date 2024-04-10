@@ -10,10 +10,12 @@ using json = nlohmann::json;
 using namespace std;
 using namespace TgBot;
 
-vector<string> responseCodeForces(vector<string>& arr) {
+vector<string> codeForcesResponse;
+string dailyLinkLeetCode = "";
+
+void responseCodeForces(vector<string>& arr) {
     string response;
-    cpr::Response r = cpr::Get(cpr::Url{ "https://codeforces.com/api/contest.list?gym=false" },
-        cpr::Parameters{ {"key", "e7c0254644e15459ed8fc771561ecbb64a46c62c"} });
+    cpr::Response r = cpr::Get(cpr::Url{ "https://codeforces.com/api/contest.list?gym=false" });
 
     response = r.text;
     json responseJson = json::parse(response);
@@ -23,51 +25,66 @@ vector<string> responseCodeForces(vector<string>& arr) {
             arr.push_back(object[i]["name"]);
         }
         else {
-            break;
+            return;
         }
     }
-    return arr;
+}
+
+string responseLeetCode() {
+    string response;
+    cpr::Response r = cpr::Get(cpr::Url{ "https://alfa-leetcode-api.onrender.com/daily" });
+
+    response = r.text;
+    json responseJson = json::parse(response);
+    json link = responseJson["questionLink"];
+    return link;
 }
 
 
 int main() {
-    vector<string> codeForcesResponse;
 
+    responseLeetCode();
     InlineKeyboardMarkup::Ptr keyboard(new InlineKeyboardMarkup);
     vector<InlineKeyboardButton::Ptr> row0;
     InlineKeyboardButton::Ptr checkButton(new InlineKeyboardButton);
-    checkButton->text = "Get events";
-    checkButton->callbackData = "getÑontests";
+    checkButton->text = "Get contests";
+    checkButton->callbackData = "Gtc";
     row0.push_back(checkButton);
-
     keyboard->inlineKeyboard.push_back(row0);
-    responseCodeForces(codeForcesResponse);
-    for (int i = 0; i < codeForcesResponse.size(); i++) {
-        cout << codeForcesResponse[i] << endl;
-    }
+
+
     Bot bot("7023822643:AAEwT8kBOO01UNLrBdXEIDQCSZUYcVUHen4");
+
     bot.getEvents().onCommand("start", [&bot, &keyboard](Message::Ptr message) {
-        bot.getApi().sendMessage(message->chat->id, "Hi! It is a contests bot \nHere you can get info about programming contests", false, 0, keyboard);
+        bot.getApi().sendMessage(message->chat->id, "Hi!", false, 0, keyboard);
         });
 
     bot.getEvents().onCallbackQuery([&bot, &keyboard](CallbackQuery::Ptr query) {
-        if (StringTools::startsWith(query->data, "getContests")) {
-            string response = "Here is the closest contests";
-            bot.getApi().sendMessage(query->message->chat->id, response, false, 0, keyboard, "Markdown");
+        if (StringTools::startsWith(query->data, "Gtc")) {
+            dailyLinkLeetCode = responseLeetCode();
+            responseCodeForces(codeForcesResponse);
+            if (codeForcesResponse.size() > 0) {
+                string response = "Codeforces:";
+                bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
+                for (int i = 0; i < codeForcesResponse.size(); i++) {
+                    bot.getApi().sendMessage(query->message->chat->id, codeForcesResponse[i], false, 0);
+                }
+                response = "To get this competitions follow by link: ";
+                bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
+                string link = "https://codeforces.com/contests";
+                bot.getApi().sendMessage(query->message->chat->id, link, false, 0);
+            }
+            string response = "Daily Leetcode:";
+            if (dailyLinkLeetCode != "") {
+                bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
+                bot.getApi().sendMessage(query->message->chat->id, dailyLinkLeetCode, false, 0);
+            }
+            codeForcesResponse.clear();
         }
+        
         });
-    signal(SIGINT, [](int s) {
-        printf("SIGINT got\n");
-        exit(0);
-        });
+    
 
-    bot.getEvents().onAnyMessage([&bot](TgBot::Message::Ptr message) {
-        printf("User wrote %s\n", message->text.c_str());
-        if (StringTools::startsWith(message->text, "/start")) {
-            return;
-        }
-        bot.getApi().sendMessage(message->chat->id, "Your message is: " + message->text);
-        });
     try {
 
         printf("Bot username: %s\n", bot.getApi().getMe()->username.c_str());
@@ -82,7 +99,5 @@ int main() {
     catch (TgBot::TgException& e) {
         printf("error: %s\n", e.what());
     }
-
-
     return 0;
 }
