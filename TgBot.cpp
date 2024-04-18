@@ -80,7 +80,27 @@ int main() {
                 bot.getApi().sendMessage(query->message->chat->id, dailyLinkLeetCode, false, 0);
             }
             codeForcesResponse.clear();
+            response = "There is my collect with useful materials about competitive programming";
+            bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
+            response = "Useful site for newbees:";
+            bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
+            response = "https://acmp.ru/";
+            bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
+            response = "Some algorithms sites, channels, materials:";
+            bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
+            response = "https://ru.algorithmica.org/";
+            bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
+            response = "https://peltorator.ru/cp_book.pdf";
+            bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
+            response = "emaxx have to be here, but site author didn't confirm license))";
+            bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
+            response = "https://www.youtube.com/@pavelmavrin";
+            bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
+            response = "Stankevich site:";
+            response = "https://neerc.ifmo.ru/school/information/index.html";
+            bot.getApi().sendMessage(query->message->chat->id, response, false, 0, keyboard);
         }
+
         
         });
     
