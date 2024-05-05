@@ -42,26 +42,106 @@ string responseLeetCode() {
 
 
 int main() {
+    vector<string> themes;
 
-    responseLeetCode();
+
     InlineKeyboardMarkup::Ptr keyboard(new InlineKeyboardMarkup);
-    vector<InlineKeyboardButton::Ptr> row0;
-    InlineKeyboardButton::Ptr checkButton(new InlineKeyboardButton);
-    checkButton->text = "Get contests";
-    checkButton->callbackData = "Gtc";
-    row0.push_back(checkButton);
-    keyboard->inlineKeyboard.push_back(row0);
+    vector<InlineKeyboardButton::Ptr> row0, row1, row2;
+ 
+    InlineKeyboardButton::Ptr checkButtonCF(new InlineKeyboardButton);
+    InlineKeyboardButton::Ptr checkButtonLeetcode(new InlineKeyboardButton);
+    InlineKeyboardButton::Ptr checkButtonGetMaterials(new InlineKeyboardButton);
+    checkButtonCF->text = "Get contests from CF or CF archive";
+    checkButtonCF->callbackData = "GtCfAr";
+    row0.push_back(checkButtonCF);
+    
+    checkButtonLeetcode->text = "Get daily LeetCode";
+    checkButtonLeetcode->callbackData = "Gtl";
+    row1.push_back(checkButtonLeetcode);
 
+    checkButtonGetMaterials->text = "Get materials";
+    checkButtonGetMaterials->callbackData = "Gtm";
+    row2.push_back(checkButtonGetMaterials);
+    keyboard->inlineKeyboard.push_back(row0);
+    keyboard->inlineKeyboard.push_back(row1);
+    keyboard->inlineKeyboard.push_back(row2);
+
+
+
+    InlineKeyboardMarkup::Ptr keyboardCF(new InlineKeyboardMarkup);
+    vector<InlineKeyboardButton::Ptr> row0Cf, row1Cf;
+ 
+    InlineKeyboardButton::Ptr checkButtonGetCont(new InlineKeyboardButton);
+    InlineKeyboardButton::Ptr checkButtonCfZProblems(new InlineKeyboardButton);
+    checkButtonGetCont->text = "Get contests from CF";
+    checkButtonGetCont->callbackData = "Gtc";
+    row0Cf.push_back(checkButtonGetCont);
+    
+    checkButtonCfZProblems->text = "Get problems by tags";
+    checkButtonCfZProblems->callbackData = "GtcAr";
+    row1Cf.push_back(checkButtonCfZProblems);
+
+    keyboardCF->inlineKeyboard.push_back(row0Cf);
+    keyboardCF->inlineKeyboard.push_back(row1Cf);
+
+
+
+    InlineKeyboardMarkup::Ptr keyboardCFTagsAndConfirm(new InlineKeyboardMarkup);
+    vector<InlineKeyboardButton::Ptr> r2Pointers, rDsu, rGraphs, rDp, rGames, rBinarySearch, rDS, rConfirm;
+ 
+    InlineKeyboardButton::Ptr Buttonr2Pointers(new InlineKeyboardButton);
+    InlineKeyboardButton::Ptr ButtonrDsu(new InlineKeyboardButton);
+    InlineKeyboardButton::Ptr ButtonrGraphs(new InlineKeyboardButton);
+    InlineKeyboardButton::Ptr ButtonrDp(new InlineKeyboardButton);
+    InlineKeyboardButton::Ptr ButtonrGames(new InlineKeyboardButton);
+    InlineKeyboardButton::Ptr ButtonrBinarySearch(new InlineKeyboardButton);
+    InlineKeyboardButton::Ptr ButtonrDS(new InlineKeyboardButton);
+    InlineKeyboardButton::Ptr ButtonrConfirm(new InlineKeyboardButton);
+    Buttonr2Pointers->text = "2-pointers";
+    Buttonr2Pointers->callbackData = "2Pointers";
+    ButtonrDsu->text = "DSU";
+    ButtonrDsu->callbackData = "Dsu";
+    ButtonrGraphs->text = "Graphs";
+    ButtonrGraphs->callbackData = "Graphs";
+    ButtonrDp->text = "Dynamic programming";
+    ButtonrDp->callbackData = "DP";
+    ButtonrGames->text = "Games theory";
+    ButtonrGames->callbackData = "Gt";
+    ButtonrBinarySearch->text = "Binary search";
+    ButtonrBinarySearch->callbackData = "BinS";
+    ButtonrDS->text = "Data structures";
+    ButtonrDS->callbackData = "DS";
+    ButtonrConfirm->text = "Confirm selection and get problems";
+    ButtonrConfirm->callbackData = "Conf";
+
+    r2Pointers.push_back(Buttonr2Pointers);
+    rDsu.push_back(ButtonrDsu);
+    rGraphs.push_back(ButtonrGraphs);
+    rDp.push_back(ButtonrDp);
+    rGames.push_back(ButtonrGames);
+    rBinarySearch.push_back(ButtonrBinarySearch);
+    rDS.push_back(ButtonrDS);
+    rConfirm.push_back(ButtonrConfirm);
+    
+
+    keyboardCFTagsAndConfirm->inlineKeyboard.push_back(r2Pointers);
+    keyboardCFTagsAndConfirm->inlineKeyboard.push_back(rDsu);
+    keyboardCFTagsAndConfirm->inlineKeyboard.push_back(rGraphs);
+    keyboardCFTagsAndConfirm->inlineKeyboard.push_back(rDp);
+    keyboardCFTagsAndConfirm->inlineKeyboard.push_back(rGames);
+    keyboardCFTagsAndConfirm->inlineKeyboard.push_back(rBinarySearch);
+    keyboardCFTagsAndConfirm->inlineKeyboard.push_back(rDS);
+    keyboardCFTagsAndConfirm->inlineKeyboard.push_back(rConfirm);
 
     Bot bot("7023822643:AAEwT8kBOO01UNLrBdXEIDQCSZUYcVUHen4");
 
     bot.getEvents().onCommand("start", [&bot, &keyboard](Message::Ptr message) {
-        bot.getApi().sendMessage(message->chat->id, "Hi!", false, 0, keyboard);
+        bot.getApi().sendMessage(message->chat->id, "Hi!\nIts a bot for beginners in competitive programming\nHere you can fast get list of CF contests\nLettcode daily task and materials that can help you improve you skills", false, 0, keyboard);
         });
 
+
     bot.getEvents().onCallbackQuery([&bot, &keyboard](CallbackQuery::Ptr query) {
-        if (StringTools::startsWith(query->data, "Gtc")) {
-            dailyLinkLeetCode = responseLeetCode();
+        if (query->data == "Gtc") {
             responseCodeForces(codeForcesResponse);
             if (codeForcesResponse.size() > 0) {
                 string response = "Codeforces:";
@@ -74,12 +154,34 @@ int main() {
                 string link = "https://codeforces.com/contests";
                 bot.getApi().sendMessage(query->message->chat->id, link, false, 0);
             }
+            codeForcesResponse.clear();
+        }
+    });
+
+    bot.getEvents().onCallbackQuery([&bot, &keyboard, &keyboardCFTagsAndConfirm](CallbackQuery::Ptr query) {
+        if (query->data == "GtcAr") {
+            string response = "Select themes:";
+            bot.getApi().sendMessage(query->message->chat->id, response, false, 0, keyboard = keyboardCFTagsAndConfirm);
+                 
+        }
+    });
+    bot.getEvents().onCallbackQuery([&bot, &keyboard, &keyboardCF](CallbackQuery::Ptr query) {
+        if (StringTools::startsWith(query->data, "GtCfAr")) {
+            string response = "Please select:";
+                bot.getApi().sendMessage(query->message->chat->id, response, false, 0, keyboard = keyboardCF);
+            
+        }
+        if (StringTools::startsWith(query->data, "Gtl")) {
+            dailyLinkLeetCode = responseLeetCode();
             string response = "Daily Leetcode:";
             if (dailyLinkLeetCode != "") {
                 bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
                 bot.getApi().sendMessage(query->message->chat->id, dailyLinkLeetCode, false, 0);
-            }
-            codeForcesResponse.clear();
+           }
+         }
+
+        if (StringTools::startsWith(query->data, "Gtm")) {
+            string response;
             response = "There is my collect with useful materials about competitive programming";
             bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
             response = "Useful site for newbees:";
@@ -92,18 +194,73 @@ int main() {
             bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
             response = "https://peltorator.ru/cp_book.pdf";
             bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
-            response = "emaxx have to be here, but site author didn't confirm license))";
+            response = "http://e-maxx.ru/algo/";
             bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
             response = "https://www.youtube.com/@pavelmavrin";
             bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
             response = "Stankevich site:";
+            bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
             response = "https://neerc.ifmo.ru/school/information/index.html";
-            bot.getApi().sendMessage(query->message->chat->id, response, false, 0, keyboard);
-        }
-
-        
+            bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
+            }
         });
-    
+
+    bot.getEvents().onCallbackQuery([&bot, &keyboard, &keyboardCFTagsAndConfirm, &themes](CallbackQuery::Ptr query)
+        {
+        if (query->data == "2Pointers")
+        {
+            themes.push_back("two pointers");
+        }
+        });
+        bot.getEvents().onCallbackQuery([&bot, &keyboard, &keyboardCFTagsAndConfirm, &themes](CallbackQuery::Ptr query)
+        {
+        if (query->data == "Dsu")
+        {
+            themes.push_back("dsu");
+        }
+        });
+        bot.getEvents().onCallbackQuery([&bot, &keyboard, &keyboardCFTagsAndConfirm, &themes](CallbackQuery::Ptr query)
+        {
+        if (query->data == "Graphs")
+        {
+            themes.push_back("graphs");
+        }
+        });
+        bot.getEvents().onCallbackQuery([&bot, &keyboard, &keyboardCFTagsAndConfirm, &themes](CallbackQuery::Ptr query)
+        {
+        if (query->data == "DP")
+        {
+            themes.push_back("dp");
+        }
+        });
+        bot.getEvents().onCallbackQuery([&bot, &keyboard, &keyboardCFTagsAndConfirm, &themes](CallbackQuery::Ptr query)
+        {
+        if (query->data == "Gt")
+        {
+            themes.push_back("games");
+        }
+        });
+        bot.getEvents().onCallbackQuery([&bot, &keyboard, &keyboardCFTagsAndConfirm, &themes](CallbackQuery::Ptr query)
+        {
+        if (query->data == "BinS")
+        {
+            themes.push_back("binary search");
+        }
+        });
+        bot.getEvents().onCallbackQuery([&bot, &keyboard, &keyboardCFTagsAndConfirm, &themes](CallbackQuery::Ptr query)
+        {
+        if (query->data == "DS")
+        {
+            themes.push_back("data structures");
+        }
+        });
+        bot.getEvents().onCallbackQuery([&bot, &keyboard, &keyboardCFTagsAndConfirm, &themes](CallbackQuery::Ptr query)
+        {
+        if (query->data == "Conf")
+        {
+            cout << themes.size();
+        }
+        });
 
     try {
 
