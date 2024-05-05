@@ -1,9 +1,9 @@
 #include <iostream>
+#include <format>
 #include <tgbot/tgbot.h>
 #include <cpr/cpr.h>
 #include <string>
 #include <nlohmann/json.hpp>
-
 
 
 using json = nlohmann::json;
@@ -11,7 +11,26 @@ using namespace std;
 using namespace TgBot;
 
 vector<string> codeForcesResponse;
+vector<string> problems;
 string dailyLinkLeetCode = "";
+
+
+void getProblemsByTags(vector<string>& problems,vector<string> arr)
+{
+   string response;
+   string req = "";
+   for (int i = 0; i < arr.size(); i++)
+   {
+       req += arr[i] + ";";
+   }
+   cpr::Response r = cpr::Get(cpr::Url{format("https://codeforces.com/api/problemset.problems?tags={}", req)});
+   response = r.text;
+   json responseJson = json::parse(response);
+   json object = responseJson["result"]["problems"];
+   for (int i = 0; i < object.size(); i++) {
+       problems.push_back(to_string(object[i]["contestId"]) + "/" + to_string(object[i]["index"])[1]);
+   }
+}
 
 void responseCodeForces(vector<string>& arr) {
     string response;
@@ -23,6 +42,7 @@ void responseCodeForces(vector<string>& arr) {
     for (int i = 0; i < object.size(); i++) {
         if (object[i]["phase"] == "BEFORE") {
             arr.push_back(object[i]["name"]);
+      
         }
         else {
             return;
@@ -111,7 +131,7 @@ int main() {
     ButtonrBinarySearch->callbackData = "BinS";
     ButtonrDS->text = "Data structures";
     ButtonrDS->callbackData = "DS";
-    ButtonrConfirm->text = "Confirm selection and get problems";
+    ButtonrConfirm->text = "Confirm selection and enter problems rating";
     ButtonrConfirm->callbackData = "Conf";
 
     r2Pointers.push_back(Buttonr2Pointers);
@@ -257,8 +277,18 @@ int main() {
         bot.getEvents().onCallbackQuery([&bot, &keyboard, &keyboardCFTagsAndConfirm, &themes](CallbackQuery::Ptr query)
         {
         if (query->data == "Conf")
+        
         {
-            cout << themes.size();
+           
+            getProblemsByTags(problems,themes);
+            themes.clear();
+            if (problems.size() != 0)
+            {
+                for (int i = 0; i < problems.size(); i++)
+                {
+                    cout << problems[i] << endl;
+                }
+            }
         }
         });
 
