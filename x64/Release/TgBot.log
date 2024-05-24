@@ -1,0 +1,355 @@
+﻿  TgBot.cpp
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\format(42): warning STL4038: The contents of <format> are available only with C++20 or later.
+  Please define _WIN32_WINNT or _WIN32_WINDOWS appropriately. For example:
+  - add -D_WIN32_WINNT=0x0601 to the compiler command line; or
+  - add _WIN32_WINNT=0x0601 to your project's Preprocessor Definitions.
+  Assuming _WIN32_WINNT=0x0601 (i.e. Windows 7 target).
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\string_view(12): warning STL4038: The contents of <string_view> are available only with C++17 or later.
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\filesystem(12): warning STL4038: The contents of <filesystem> are available only with C++17 or later.
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\optional(11): warning STL4038: The contents of <optional> are available only with C++17 or later.
+D:\vcpkg\installed\x64-windows\include\cpr\cprtypes.h(34,32): error C2039: 'string_view': is not a member of 'std'
+  (compiling source file 'TgBot.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\numeric(26,1):
+  see declaration of 'std'
+  D:\vcpkg\installed\x64-windows\include\cpr\cprtypes.h(34,32):
+  the template instantiation context (the oldest one first) is
+  	D:\vcpkg\installed\x64-windows\include\cpr\cprtypes.h(30,7):
+  	while compiling class template 'cpr::StringHolder'
+  
+D:\vcpkg\installed\x64-windows\include\cpr\cprtypes.h(34,32): error C2061: syntax error: identifier 'string_view'
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\cprtypes.h(34,5): error C2535: 'cpr::StringHolder<T>::StringHolder(void)': member function already defined or declared
+  (compiling source file 'TgBot.cpp')
+  D:\vcpkg\installed\x64-windows\include\cpr\cprtypes.h(32,5):
+  see declaration of 'cpr::StringHolder<T>::StringHolder'
+  
+D:\vcpkg\installed\x64-windows\include\cpr\cprtypes.h(34,5): error C2535: 'cpr::StringHolder<cpr::Url>::StringHolder(void)': member function already defined or declared
+  (compiling source file 'TgBot.cpp')
+  D:\vcpkg\installed\x64-windows\include\cpr\cprtypes.h(32,5):
+  see declaration of 'cpr::StringHolder<cpr::Url>::StringHolder'
+  
+D:\vcpkg\installed\x64-windows\include\cpr\cprtypes.h(123,14): error C2039: 'string_view': is not a member of 'std'
+  (compiling source file 'TgBot.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\numeric(26,1):
+  see declaration of 'std'
+  
+D:\vcpkg\installed\x64-windows\include\cpr\cprtypes.h(123,14): error C2061: syntax error: identifier 'string_view'
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\cprtypes.h(123,5): error C2535: 'cpr::Url::Url(void)': member function already defined or declared
+  (compiling source file 'TgBot.cpp')
+  D:\vcpkg\installed\x64-windows\include\cpr\cprtypes.h(119,5):
+  see declaration of 'cpr::Url::Url'
+  
+D:\vcpkg\installed\x64-windows\include\cpr\cprtypes.h(123,51): error C2065: 'url': undeclared identifier
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\filesystem.h(15,21): error C2039: 'filesystem': is not a member of 'std'
+  (compiling source file 'TgBot.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\numeric(26,1):
+  see declaration of 'std'
+  
+D:\vcpkg\installed\x64-windows\include\cpr\filesystem.h(15,21): error C2878: 'filesystem': a namespace or class of this name does not exist
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\callback.h(105,10): error C2039: 'optional': is not a member of 'std'
+  (compiling source file 'TgBot.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\numeric(26,1):
+  see declaration of 'std'
+  
+D:\vcpkg\installed\x64-windows\include\cpr\callback.h(105,18): error C2143: syntax error: missing ';' before '<'
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\callback.h(105,18): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\callback.h(105,68): error C2238: unexpected token(s) preceding ';'
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\callback.h(97,140): error C2955: 'std::reference_wrapper': use of class template requires template argument list
+  (compiling source file 'TgBot.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\type_traits(2026,7):
+  see declaration of 'std::reference_wrapper'
+  
+D:\vcpkg\installed\x64-windows\include\cpr\callback.h(97,127): error C2614: 'cpr::CancellationCallback': illegal member initialization: 'user_cb' is not a base or member
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\util.h(13,21): error C2429: language feature 'nested-namespace-definition' requires compiler flag '/std:c++17'
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(94,14): error C2653: 'fs': is not a class or namespace name
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(94,18): error C2061: syntax error: identifier 'path'
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(98,11): error C2653: 'fs': is not a class or namespace name
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(98,20): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(98,20): error C3646: 'filename': unknown override specifier
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(94,58): error C2065: 'p_filename': undeclared identifier
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(94,71): error C2789: 'cpr::ssl::CertFile::path': an object of const-qualified type must be initialized
+  (compiling source file 'TgBot.cpp')
+  D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(98,15):
+  see declaration of 'cpr::ssl::CertFile::path'
+  
+D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(94,39): error C2614: 'cpr::ssl::CertFile': illegal member initialization: 'filename' is not a base or member
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(110,13): error C2653: 'fs': is not a class or namespace name
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(110,17): error C2327: 'cpr::ssl::CertFile::path': is not a type name, static, or enumerator
+  (compiling source file 'TgBot.cpp')
+  D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(110,17):
+  see declaration of 'cpr::ssl::CertFile::path'
+  
+D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(110,17): error C2061: syntax error: identifier 'path'
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(110,57): error C2065: 'p_filename': undeclared identifier
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(123,13): error C2653: 'fs': is not a class or namespace name
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(123,17): error C2061: syntax error: identifier 'path'
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(132,5): error C2653: 'fs': is not a class or namespace name
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(132,14): error C3646: 'filename': unknown override specifier
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(132,22): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(126,59): error C3861: 'filename': identifier not found
+  (compiling source file 'TgBot.cpp')
+  D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(126,5):
+  This diagnostic occurred in the compiler generated function 'cpr::ssl::KeyFile::KeyFile(FileType &&,PassType)'
+  
+D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(123,57): error C2065: 'p_filename': undeclared identifier
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(123,38): error C2614: 'cpr::ssl::KeyFile': illegal member initialization: 'filename' is not a base or member
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(167,12): error C2653: 'fs': is not a class or namespace name
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(167,16): error C2061: syntax error: identifier 'path'
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(167,55): error C2065: 'p_filename': undeclared identifier
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(316,12): error C2653: 'fs': is not a class or namespace name
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(316,16): error C2061: syntax error: identifier 'path'
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(318,5): error C2653: 'fs': is not a class or namespace name
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(318,14): error C3646: 'filename': unknown override specifier
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(318,22): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(316,56): error C2065: 'p_filename': undeclared identifier
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(316,37): error C2614: 'cpr::ssl::CaInfo': illegal member initialization: 'filename' is not a base or member
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(325,12): error C2653: 'fs': is not a class or namespace name
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(325,16): error C2061: syntax error: identifier 'path'
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(327,5): error C2653: 'fs': is not a class or namespace name
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(327,14): error C3646: 'filename': unknown override specifier
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(327,22): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(325,56): error C2065: 'p_filename': undeclared identifier
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(325,37): error C2614: 'cpr::ssl::CaPath': illegal member initialization: 'filename' is not a base or member
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(344,9): error C2653: 'fs': is not a class or namespace name
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(344,13): error C2061: syntax error: identifier 'path'
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(346,5): error C2653: 'fs': is not a class or namespace name
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(346,14): error C3646: 'filename': unknown override specifier
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(346,22): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(344,53): error C2065: 'p_filename': undeclared identifier
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(344,34): error C2614: 'cpr::ssl::Crl': illegal member initialization: 'filename' is not a base or member
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(468,25): error C2039: 'filename': is not a member of 'cpr::ssl::CertFile'
+  (compiling source file 'TgBot.cpp')
+  D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(91,7):
+  see declaration of 'cpr::ssl::CertFile'
+  
+D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(472,24): error C2039: 'filename': is not a member of 'cpr::ssl::KeyFile'
+  (compiling source file 'TgBot.cpp')
+  D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(120,7):
+  see declaration of 'cpr::ssl::KeyFile'
+  
+D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(570,23): error C2039: 'filename': is not a member of 'cpr::ssl::CaInfo'
+  (compiling source file 'TgBot.cpp')
+  D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(313,7):
+  see declaration of 'cpr::ssl::CaInfo'
+  
+D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(573,23): error C2039: 'filename': is not a member of 'cpr::ssl::CaPath'
+  (compiling source file 'TgBot.cpp')
+  D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(322,7):
+  see declaration of 'cpr::ssl::CaPath'
+  
+D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(581,24): error C2039: 'filename': is not a member of 'cpr::ssl::Crl'
+  (compiling source file 'TgBot.cpp')
+  D:\vcpkg\installed\x64-windows\include\cpr\ssl_options.h(341,7):
+  see declaration of 'cpr::ssl::Crl'
+  
+D:\vcpkg\installed\x64-windows\include\cpr\async_wrapper.h(40,9): warning C4984: 'if constexpr' is a C++17 language extension
+  (compiling source file 'TgBot.cpp')
+  D:\vcpkg\installed\x64-windows\include\cpr\async_wrapper.h(40,9):
+  the template instantiation context (the oldest one first) is
+  	D:\vcpkg\installed\x64-windows\include\cpr\async_wrapper.h(20,7):
+  	while compiling class template 'cpr::AsyncWrapper'
+  
+D:\vcpkg\installed\x64-windows\include\cpr\async_wrapper.h(48,9): warning C4984: 'if constexpr' is a C++17 language extension
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\async_wrapper.h(60,9): warning C4984: 'if constexpr' is a C++17 language extension
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\async_wrapper.h(68,9): warning C4984: 'if constexpr' is a C++17 language extension
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\async_wrapper.h(81,9): warning C4984: 'if constexpr' is a C++17 language extension
+  (compiling source file 'TgBot.cpp')
+  D:\vcpkg\installed\x64-windows\include\cpr\async_wrapper.h(80,24):
+  This diagnostic occurred in the compiler generated function 'std::future_status cpr::AsyncWrapper<T,isCancellable>::wait_for(const std::chrono::duration<_Rep2,_Period2> &) const'
+  
+D:\vcpkg\installed\x64-windows\include\cpr\async_wrapper.h(94,9): warning C4984: 'if constexpr' is a C++17 language extension
+  (compiling source file 'TgBot.cpp')
+  D:\vcpkg\installed\x64-windows\include\cpr\async_wrapper.h(93,24):
+  This diagnostic occurred in the compiler generated function 'std::future_status cpr::AsyncWrapper<T,isCancellable>::wait_until(const std::chrono::time_point<_Clock,_Duration> &) const'
+  
+D:\vcpkg\installed\x64-windows\include\cpr\async_wrapper.h(111,9): warning C4984: 'if constexpr' is a C++17 language extension
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\async_wrapper.h(122,9): warning C4984: 'if constexpr' is a C++17 language extension
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\async_wrapper.h(132,28): error C2988: unrecognizable template declaration/definition
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\async_wrapper.h(132,28): error C2143: syntax error: missing ')' before '&&'
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\async_wrapper.h(132,28): error C2143: syntax error: missing ';' before '&&'
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\async_wrapper.h(132,1): error C2888: 'std::future<_Ty>': symbol cannot be defined within namespace 'cpr'
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\async_wrapper.h(132,30): error C2059: syntax error: ')'
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\async_wrapper.h(132,32): error C2988: unrecognizable template declaration/definition
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\async_wrapper.h(132,32): error C2059: syntax error: '->'
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\async_wrapper.h(132,48): error C2065: 'T': undeclared identifier
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\async_wrapper.h(132,35): error C2923: 'cpr::AsyncWrapper': 'T' is not a valid template type argument for parameter 'T'
+  (compiling source file 'TgBot.cpp')
+  D:\vcpkg\installed\x64-windows\include\cpr\async_wrapper.h(132,48):
+  see declaration of 'T'
+  
+D:\vcpkg\installed\x64-windows\include\cpr\async_wrapper.h(137,1): error C2143: syntax error: missing ';' before '}'
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\buffer.h(14,42): error C2653: 'fs': is not a class or namespace name
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\buffer.h(14,46): error C2061: syntax error: identifier 'path'
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\buffer.h(28,11): error C2653: 'fs': is not a class or namespace name
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\buffer.h(28,20): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\buffer.h(28,20): error C3646: 'filename': unknown override specifier
+  (compiling source file 'TgBot.cpp')
+  
+D:\vcpkg\installed\x64-windows\include\cpr\buffer.h(18,115): error C3861: 'filename': identifier not found
+  (compiling source file 'TgBot.cpp')
+  D:\vcpkg\installed\x64-windows\include\cpr\buffer.h(14,5):
+  This diagnostic occurred in the compiler generated function 'cpr::Buffer::Buffer(Iterator,Iterator)'
+  
+D:\vcpkg\installed\x64-windows\include\cpr\buffer.h(18,134): error C3861: 'p_filename': identifier not found
+  (compiling source file 'TgBot.cpp')
+  D:\vcpkg\installed\x64-windows\include\cpr\buffer.h(14,5):
+  This diagnostic occurred in the compiler generated function 'cpr::Buffer::Buffer(Iterator,Iterator)'
+  
+D:\vcpkg\installed\x64-windows\include\cpr\buffer.h(18,134): error C2065: 'p_filename': undeclared identifier
+  (compiling source file 'TgBot.cpp')
+  D:\vcpkg\installed\x64-windows\include\cpr\buffer.h(14,5):
+  This diagnostic occurred in the compiler generated function 'cpr::Buffer::Buffer(Iterator,Iterator)'
+  
+D:\vcpkg\installed\x64-windows\include\cpr\multipart.h(20,128): error C2039: 'filename': is not a member of 'cpr::Buffer'
+  (compiling source file 'TgBot.cpp')
+  D:\vcpkg\installed\x64-windows\include\cpr\buffer.h(10,8):
+  see declaration of 'cpr::Buffer'
+  
+D:\vcpkg\installed\x64-windows\include\cpr\cprtypes.h(34,5): error C2535: 'cpr::StringHolder<cpr::Body>::StringHolder(void)': member function already defined or declared
+  (compiling source file 'TgBot.cpp')
+  D:\vcpkg\installed\x64-windows\include\cpr\cprtypes.h(32,5):
+  see declaration of 'cpr::StringHolder<cpr::Body>::StringHolder'
+  
+D:\vcpkg\installed\x64-windows\include\cpr\body.h(22,15): error C2039: 'string_view': is not a member of 'std'
+  (compiling source file 'TgBot.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\unordered_set(23,1):
+  see declaration of 'std'
+  
+D:\vcpkg\installed\x64-windows\include\cpr\body.h(22,15): error C1003: error count exceeds 100; stopping compilation
+  (compiling source file 'TgBot.cpp')
+  

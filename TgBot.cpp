@@ -57,26 +57,9 @@ void responseCodeForces(vector<string>& arr) {
 
 
 int main() {
+
+    setlocale(LC_ALL, "RU-ru");
     vector<string> themes;
-
-
-    InlineKeyboardMarkup::Ptr keyboardMain(new InlineKeyboardMarkup);
-    vector<InlineKeyboardButton::Ptr> row0, row1;
- 
-    InlineKeyboardButton::Ptr checkButtonCF(new InlineKeyboardButton);
-    InlineKeyboardButton::Ptr checkButtonLeetcode(new InlineKeyboardButton);
-    InlineKeyboardButton::Ptr checkButtonGetMaterials(new InlineKeyboardButton);
-    checkButtonCF->text = "Get availible contests from CF or CF archive";
-    checkButtonCF->callbackData = "GtCfAr";
-    row0.push_back(checkButtonCF);
-    
-
-    checkButtonGetMaterials->text = "Get materials";
-    checkButtonGetMaterials->callbackData = "Gtm";
-    row1.push_back(checkButtonGetMaterials);
-    keyboardMain->inlineKeyboard.push_back(row0);
-    keyboardMain->inlineKeyboard.push_back(row1);
-
 
     InlineKeyboardMarkup::Ptr keyboardCF(new InlineKeyboardMarkup);
     vector<InlineKeyboardButton::Ptr> row0Cf, row1Cf;
@@ -145,12 +128,12 @@ int main() {
 
     Bot bot("7023822643:AAEwT8kBOO01UNLrBdXEIDQCSZUYcVUHen4");
 
-    bot.getEvents().onCommand("start", [&bot, &keyboardMain](Message::Ptr message) {
-        bot.getApi().sendMessage(message->chat->id, "Hi!\nIts a bot for beginners in competitive programming\nHere you can fast get list of CF contests\nLettcode daily task and materials that can help you improve you skills", false, 0, keyboardMain);
+    bot.getEvents().onCommand("start", [&bot, &keyboardCF](Message::Ptr message) {
+        bot.getApi().sendMessage(message->chat->id, "Hi, in this bot you can try CF API", false, 0, keyboardCF);
         });
 
 
-    bot.getEvents().onCallbackQuery([&bot, &keyboardMain](CallbackQuery::Ptr query) {
+    bot.getEvents().onCallbackQuery([&bot, &keyboardCF](CallbackQuery::Ptr query) {
         if (query->data == "Gtc") {
             responseCodeForces(codeForcesResponse);
             if (codeForcesResponse.size() > 0) {
@@ -159,53 +142,22 @@ int main() {
                 for (int i = 0; i < codeForcesResponse.size(); i++) {
                     bot.getApi().sendMessage(query->message->chat->id, codeForcesResponse[i], false, 0);
                 }
-                response = "To get this competitions follow by link: ";
+                response = "Contests availible here: ";
                 bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
                 string link = "https://codeforces.com/contests";
-                bot.getApi().sendMessage(query->message->chat->id, link, false, 0, keyboardMain);
+                bot.getApi().sendMessage(query->message->chat->id, link, false, 0, keyboardCF);
             }
             codeForcesResponse.clear();
         }
     });
 
-    bot.getEvents().onCallbackQuery([&bot, &keyboardMain, &keyboardCFTagsAndConfirm](CallbackQuery::Ptr query) {
+    bot.getEvents().onCallbackQuery([&bot, &keyboardCFTagsAndConfirm](CallbackQuery::Ptr query) {
         if (query->data == "GtcAr") {
-            string response = "Select themes:";
+            string response = "Select tags: ";
             bot.getApi().sendMessage(query->message->chat->id, response, false, 0, keyboardCFTagsAndConfirm);
                  
         }
     });
-    bot.getEvents().onCallbackQuery([&bot, &keyboardMain, &keyboardCF](CallbackQuery::Ptr query) {
-        if (StringTools::startsWith(query->data, "GtCfAr")) {
-            string response = "Please select:";
-                bot.getApi().sendMessage(query->message->chat->id, response, false, 0, keyboardCF);
-            
-        }
-
-        if (StringTools::startsWith(query->data, "Gtm")) {
-            string response;
-            response = "There is my collect with useful materials about competitive programming";
-            bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
-            response = "Useful site for newbees:";
-            bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
-            response = "https://acmp.ru/";
-            bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
-            response = "Some algorithms sites, channels, materials:";
-            bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
-            response = "https://ru.algorithmica.org/";
-            bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
-            response = "https://peltorator.ru/cp_book.pdf";
-            bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
-            response = "http://e-maxx.ru/algo/";
-            bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
-            response = "https://www.youtube.com/@pavelmavrin";
-            bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
-            response = "Stankevich site:";
-            bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
-            response = "https://neerc.ifmo.ru/school/information/index.html";
-            bot.getApi().sendMessage(query->message->chat->id, response, false, 0, keyboardMain);
-            }
-        });
 
     bot.getEvents().onCallbackQuery([&bot, &themes](CallbackQuery::Ptr query)
         {
@@ -256,7 +208,7 @@ int main() {
             themes.push_back("data%20structures");
         }
         });
-        bot.getEvents().onCallbackQuery([&bot,&keyboardMain, &themes](CallbackQuery::Ptr query)
+        bot.getEvents().onCallbackQuery([&bot,&keyboardCF, &themes](CallbackQuery::Ptr query)
         {
         if (query->data == "Conf")
         {
@@ -268,7 +220,7 @@ int main() {
                 if (problems.size() / 10 > 0)
                 {
                 string response;
-                response = "10 problems based on your tags";
+                response = "First 10 problems by selected tags:";
                 bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
                 for (int i = 0; i < 10; i++) {
                     response = format("https://codeforces.com/problemset/problem/{}", problems[i]);
@@ -287,8 +239,8 @@ int main() {
                         req += themes[i] + ",";
                     }
                 }
-                response = format("All {} problems are located here {}", problems.size(), req);
-                bot.getApi().sendMessage(query->message->chat->id, response, false, 0, keyboardMain);
+                response = format("All {} problems are located here -> {}", problems.size(), req);
+                bot.getApi().sendMessage(query->message->chat->id, response, false, 0, keyboardCF);
                 }
             }
             problems.clear();
