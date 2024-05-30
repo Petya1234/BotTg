@@ -12,8 +12,33 @@ using namespace TgBot;
 
 vector<string> codeForcesResponse;
 vector<string> problems;
-string dailyLinkLeetCode = "";
 
+
+string cp1251_to_utf8(const char *str){
+    string res; 
+    int result_u, result_c;
+    result_u = MultiByteToWideChar(1251, 0, str, -1, 0, 0);
+    if(!result_u ){return 0;}
+    wchar_t *ures = new wchar_t[result_u];
+    if(!MultiByteToWideChar(1251, 0, str, -1, ures, result_u)){
+        delete[] ures;
+        return 0;
+    }
+    result_c = WideCharToMultiByte(65001, 0, ures, -1, 0, 0, 0, 0);
+    if(!result_c){
+        delete [] ures;
+        return 0;
+    }
+    char *cres = new char[result_c];
+    if(!WideCharToMultiByte(65001, 0, ures, -1, cres, result_c, 0, 0)){
+        delete[] cres;
+        return 0;
+    }
+    delete[] ures;
+    res.append(cres);
+    delete[] cres;
+    return res;
+}
 
 void getProblemsByTags(vector<string>& problems,vector<string> arr)
 {
@@ -66,11 +91,11 @@ int main() {
  
     InlineKeyboardButton::Ptr checkButtonGetCont(new InlineKeyboardButton);
     InlineKeyboardButton::Ptr checkButtonCfZProblems(new InlineKeyboardButton);
-    checkButtonGetCont->text = "Get availible contests from CF";
+    checkButtonGetCont->text = cp1251_to_utf8("Доступные контесты");
     checkButtonGetCont->callbackData = "Gtc";
     row0Cf.push_back(checkButtonGetCont);
     
-    checkButtonCfZProblems->text = "Get problems by tags";
+    checkButtonCfZProblems->text = cp1251_to_utf8("Выбрать задачи по тегам");
     checkButtonCfZProblems->callbackData = "GtcAr";
     row1Cf.push_back(checkButtonCfZProblems);
 
@@ -90,21 +115,21 @@ int main() {
     InlineKeyboardButton::Ptr ButtonrBinarySearch(new InlineKeyboardButton);
     InlineKeyboardButton::Ptr ButtonrDS(new InlineKeyboardButton);
     InlineKeyboardButton::Ptr ButtonrConfirm(new InlineKeyboardButton);
-    Buttonr2Pointers->text = "2-pointers";
+    Buttonr2Pointers->text = cp1251_to_utf8("Два указателя");
     Buttonr2Pointers->callbackData = "2Pointers";
-    ButtonrDsu->text = "DSU";
+    ButtonrDsu->text = cp1251_to_utf8("DSU");
     ButtonrDsu->callbackData = "Dsu";
-    ButtonrGraphs->text = "Graphs";
+    ButtonrGraphs->text = cp1251_to_utf8("Графы");
     ButtonrGraphs->callbackData = "Graphs";
-    ButtonrDp->text = "Dynamic programming";
+    ButtonrDp->text = cp1251_to_utf8("Динамическое программирование");
     ButtonrDp->callbackData = "DP";
-    ButtonrGames->text = "Games theory";
+    ButtonrGames->text = cp1251_to_utf8("Теория игр");
     ButtonrGames->callbackData = "Gt";
-    ButtonrBinarySearch->text = "Binary search";
+    ButtonrBinarySearch->text = cp1251_to_utf8("Бинарный поиск");
     ButtonrBinarySearch->callbackData = "BinS";
-    ButtonrDS->text = "Data structures";
+    ButtonrDS->text = cp1251_to_utf8("Структуры данных");
     ButtonrDS->callbackData = "DS";
-    ButtonrConfirm->text = "Confirm selection";
+    ButtonrConfirm->text = cp1251_to_utf8("Подтвердить выбор");
     ButtonrConfirm->callbackData = "Conf";
 
     r2Pointers.push_back(Buttonr2Pointers);
@@ -128,8 +153,10 @@ int main() {
 
     Bot bot("7023822643:AAEwT8kBOO01UNLrBdXEIDQCSZUYcVUHen4");
 
+    
     bot.getEvents().onCommand("start", [&bot, &keyboardCF](Message::Ptr message) {
-        bot.getApi().sendMessage(message->chat->id, "Hi, in this bot you can try CF API", false, 0, keyboardCF);
+        string response = cp1251_to_utf8("Привет, это бот по взаимодействию КФ API");
+        bot.getApi().sendMessage(message->chat->id, response, false, 0, keyboardCF);
         });
 
 
@@ -137,12 +164,12 @@ int main() {
         if (query->data == "Gtc") {
             responseCodeForces(codeForcesResponse);
             if (codeForcesResponse.size() > 0) {
-                string response = "Codeforces:";
+                string response = cp1251_to_utf8("КФ:");
                 bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
                 for (int i = 0; i < codeForcesResponse.size(); i++) {
                     bot.getApi().sendMessage(query->message->chat->id, codeForcesResponse[i], false, 0);
                 }
-                response = "Contests availible here: ";
+                response = cp1251_to_utf8("Контесты доступны тут:");
                 bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
                 string link = "https://codeforces.com/contests";
                 bot.getApi().sendMessage(query->message->chat->id, link, false, 0, keyboardCF);
@@ -153,7 +180,7 @@ int main() {
 
     bot.getEvents().onCallbackQuery([&bot, &keyboardCFTagsAndConfirm](CallbackQuery::Ptr query) {
         if (query->data == "GtcAr") {
-            string response = "Select tags: ";
+            string response = cp1251_to_utf8("Выберите тэги:");
             bot.getApi().sendMessage(query->message->chat->id, response, false, 0, keyboardCFTagsAndConfirm);
                  
         }
@@ -214,13 +241,12 @@ int main() {
         {
            
             getProblemsByTags(problems,themes);
-            
+            cout << problems.size() << themes.size() << endl;
             if (problems.size() != 0)
             {
                 if (problems.size() / 10 > 0)
                 {
-                string response;
-                response = "First 10 problems by selected tags:";
+                string response = cp1251_to_utf8("Первые 10 проблем доступны тут:");
                 bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
                 for (int i = 0; i < 10; i++) {
                     response = format("https://codeforces.com/problemset/problem/{}", problems[i]);
@@ -239,9 +265,39 @@ int main() {
                         req += themes[i] + ",";
                     }
                 }
-                response = format("All {} problems are located here -> {}", problems.size(), req);
-                bot.getApi().sendMessage(query->message->chat->id, response, false, 0, keyboardCF);
+                response = cp1251_to_utf8("Остальные проблемы расположены тут:");
+                bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
+                bot.getApi().sendMessage(query->message->chat->id, req, false, 0, keyboardCF);
                 }
+                else
+                {
+                    string response = cp1251_to_utf8("Первые 10 проблем доступны тут:");
+                    bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
+                    for (int i = 0; i < problems.size(); i++)
+                    {
+                        response = format("https://codeforces.com/problemset/problem/{}", problems[i]);
+                        bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
+                    }
+
+                    string req = "https://codeforces.com/problemset?tags=";
+                    for (int i = 0; i < themes.size(); i++)
+                    {
+                        if (i == themes.size() - 1)
+                        {
+                            req += themes[i];
+                        }
+                        else
+                        {
+                            req += themes[i] + ",";
+                        }
+                }
+                bot.getApi().sendMessage(query->message->chat->id, req, false, 0, keyboardCF);
+                }
+            }
+            else
+            {
+                 string response = cp1251_to_utf8("Нет задач по таким тегам");
+                 bot.getApi().sendMessage(query->message->chat->id, response, false, 0, keyboardCF);
             }
             problems.clear();
             themes.clear(); 
