@@ -271,8 +271,7 @@ int main() {
                 }
                 else
                 {
-                    string response = cp1251_to_utf8("Первые 10 проблем доступны тут:");
-                    bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
+                    string response;
                     for (int i = 0; i < problems.size(); i++)
                     {
                         response = format("https://codeforces.com/problemset/problem/{}", problems[i]);
@@ -291,6 +290,7 @@ int main() {
                             req += themes[i] + ",";
                         }
                 }
+
                 bot.getApi().sendMessage(query->message->chat->id, req, false, 0, keyboardCF);
                 }
             }
