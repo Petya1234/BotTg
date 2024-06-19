@@ -4,7 +4,7 @@
 #include <cpr/cpr.h>
 #include <string>
 #include <nlohmann/json.hpp>
-
+#include <ctime>
 
 using json = nlohmann::json;
 using namespace std;
@@ -63,6 +63,8 @@ void getProblemsByTags(vector<string>& problems,vector<string> arr)
    }
 }
 
+
+
 void responseCodeForces(vector<string>& arr) {
     string response;
     cpr::Response r = cpr::Get(cpr::Url{ "https://codeforces.com/api/contest.list?gym=false" });
@@ -82,6 +84,13 @@ void responseCodeForces(vector<string>& arr) {
 
 
 int main() {
+    int hour = -1;
+
+    struct tm newtime;
+    time_t now = time(NULL);
+    localtime_s(&newtime,&now);
+    hour = newtime.tm_hour;
+    responseCodeForces(codeForcesResponse);
 
     setlocale(LC_ALL, "RU-ru");
     vector<string> themes;
@@ -160,9 +169,19 @@ int main() {
         });
 
 
-    bot.getEvents().onCallbackQuery([&bot, &keyboardCF](CallbackQuery::Ptr query) {
+    bot.getEvents().onCallbackQuery([&bot, &keyboardCF, &hour](CallbackQuery::Ptr query) {
         if (query->data == "Gtc") {
+            struct tm newtime2;
+            time_t now = time(NULL);
+            localtime_s(&newtime2, &now);
+ 
+            if (newtime2.tm_hour != hour)
+            {
+            cout << "Вызов" << endl;
+            codeForcesResponse.clear();
             responseCodeForces(codeForcesResponse);
+            hour = newtime2.tm_hour;
+            }
             if (codeForcesResponse.size() > 0) {
                 string response = cp1251_to_utf8("КФ:");
                 bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
@@ -174,7 +193,6 @@ int main() {
                 string link = "https://codeforces.com/contests";
                 bot.getApi().sendMessage(query->message->chat->id, link, false, 0, keyboardCF);
             }
-            codeForcesResponse.clear();
         }
     });
 
@@ -199,56 +217,80 @@ int main() {
     {
          themes.push_back("dsu");
     }
-        });
-        bot.getEvents().onCallbackQuery([&bot, &themes](CallbackQuery::Ptr query)
+    });
+    bot.getEvents().onCallbackQuery([&bot, &themes](CallbackQuery::Ptr query)
+    {
+    if (query->data == "Graphs")
+    {
+        themes.push_back("graphs");
+    }
+    });
+    bot.getEvents().onCallbackQuery([&bot, &themes](CallbackQuery::Ptr query)
+    {
+    if (query->data == "DP")
+    {
+        themes.push_back("dp");
+    }
+    });
+    bot.getEvents().onCallbackQuery([&bot, &themes](CallbackQuery::Ptr query)
+    {
+    if (query->data == "Gt")
+    {
+        themes.push_back("games");
+    }
+    });
+    bot.getEvents().onCallbackQuery([&bot, &themes](CallbackQuery::Ptr query)
+    {
+    if (query->data == "BinS")
+    {
+        themes.push_back("binary%20search");
+    }
+    });
+    bot.getEvents().onCallbackQuery([&bot, &themes](CallbackQuery::Ptr query)
+    {
+    if (query->data == "DS")
+    {
+        themes.push_back("data%20structures");
+    }
+    });
+    bot.getEvents().onCallbackQuery([&bot,&keyboardCF, &themes](CallbackQuery::Ptr query)
+    {
+    if (query->data == "Conf")
+    {
+        getProblemsByTags(problems,themes);
+        cout << problems.size() << " " << themes.size() << endl;
+        if (problems.size() != 0)
         {
-        if (query->data == "Graphs")
-        {
-            themes.push_back("graphs");
-        }
-        });
-        bot.getEvents().onCallbackQuery([&bot, &themes](CallbackQuery::Ptr query)
-        {
-        if (query->data == "DP")
-        {
-            themes.push_back("dp");
-        }
-        });
-        bot.getEvents().onCallbackQuery([&bot, &themes](CallbackQuery::Ptr query)
-        {
-        if (query->data == "Gt")
-        {
-            themes.push_back("games");
-        }
-        });
-        bot.getEvents().onCallbackQuery([&bot, &themes](CallbackQuery::Ptr query)
-        {
-        if (query->data == "BinS")
-        {
-            themes.push_back("binary%20search");
-        }
-        });
-        bot.getEvents().onCallbackQuery([&bot, &themes](CallbackQuery::Ptr query)
-        {
-        if (query->data == "DS")
-        {
-            themes.push_back("data%20structures");
-        }
-        });
-        bot.getEvents().onCallbackQuery([&bot,&keyboardCF, &themes](CallbackQuery::Ptr query)
-        {
-        if (query->data == "Conf")
-        {
-           
-            getProblemsByTags(problems,themes);
-            cout << problems.size() << themes.size() << endl;
-            if (problems.size() != 0)
+            if (problems.size() / 10 > 0)
             {
-                if (problems.size() / 10 > 0)
-                {
-                string response = cp1251_to_utf8("Первые 10 проблем доступны тут:");
+            string response = cp1251_to_utf8("Первые 10 проблем доступны тут:");
+            bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
+            for (int i = 0; i < 10; i++) {
+                response = format("https://codeforces.com/problemset/problem/{}", problems[i]);
                 bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
-                for (int i = 0; i < 10; i++) {
+            }
+
+            string req = "https://codeforces.com/problemset?tags=";
+            for (int i = 0; i < themes.size(); i++)
+            {
+                if (i == themes.size() - 1)
+                {
+                    req += themes[i];
+                }
+                else
+                {
+                    req += themes[i] + ",";
+                }
+            }
+            response = cp1251_to_utf8("Остальные проблемы расположены тут:");
+            bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
+            bot.getApi().sendMessage(query->message->chat->id, req, false, 0, keyboardCF);
+            }
+            else
+            {
+                string response;
+                for (int i = 0; i < problems.size(); i++)
+                {
                     response = format("https://codeforces.com/problemset/problem/{}", problems[i]);
                     bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
                 }
@@ -264,45 +306,20 @@ int main() {
                     {
                         req += themes[i] + ",";
                     }
-                }
-                response = cp1251_to_utf8("Остальные проблемы расположены тут:");
-                bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
-                bot.getApi().sendMessage(query->message->chat->id, req, false, 0, keyboardCF);
-                }
-                else
-                {
-                    string response;
-                    for (int i = 0; i < problems.size(); i++)
-                    {
-                        response = format("https://codeforces.com/problemset/problem/{}", problems[i]);
-                        bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
-                    }
-
-                    string req = "https://codeforces.com/problemset?tags=";
-                    for (int i = 0; i < themes.size(); i++)
-                    {
-                        if (i == themes.size() - 1)
-                        {
-                            req += themes[i];
-                        }
-                        else
-                        {
-                            req += themes[i] + ",";
-                        }
-                }
-
-                bot.getApi().sendMessage(query->message->chat->id, req, false, 0, keyboardCF);
-                }
             }
-            else
-            {
-                 string response = cp1251_to_utf8("Нет задач по таким тегам");
-                 bot.getApi().sendMessage(query->message->chat->id, response, false, 0, keyboardCF);
+
+            bot.getApi().sendMessage(query->message->chat->id, req, false, 0, keyboardCF);
             }
-            problems.clear();
-            themes.clear(); 
         }
-        });
+        else
+        {
+                string response = cp1251_to_utf8("Нет задач по таким тегам");
+                bot.getApi().sendMessage(query->message->chat->id, response, false, 0, keyboardCF);
+        }
+        problems.clear();
+        themes.clear(); 
+    }
+    });
 
     try {
 
@@ -311,6 +328,7 @@ int main() {
 
         TgLongPoll longPoll(bot);
         while (true) {
+            
             printf("Long poll started\n");
             longPoll.start();
         }
