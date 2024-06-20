@@ -10,7 +10,7 @@ using json = nlohmann::json;
 using namespace std;
 using namespace TgBot;
 
-vector<string> codeForcesResponse;
+vector<string> codeforcesResponse;
 vector<string> problems;
 
 
@@ -90,7 +90,7 @@ int main() {
     time_t now = time(NULL);
     localtime_s(&newtime,&now);
     hour = newtime.tm_hour;
-    responseCodeForces(codeForcesResponse);
+    responseCodeForces(codeforcesResponse);
 
     setlocale(LC_ALL, "RU-ru");
     vector<string> themes;
@@ -177,17 +177,18 @@ int main() {
  
             if (newtime2.tm_hour != hour)
             {
-            cout << "Вызов" << endl;
-            codeForcesResponse.clear();
-            responseCodeForces(codeForcesResponse);
+            codeforcesResponse.clear();
+            responseCodeForces(codeforcesResponse);
             hour = newtime2.tm_hour;
             }
-            if (codeForcesResponse.size() > 0) {
+            if (codeforcesResponse.size() > 0) {
                 string response = cp1251_to_utf8("КФ:");
                 bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
-                for (int i = 0; i < codeForcesResponse.size(); i++) {
-                    bot.getApi().sendMessage(query->message->chat->id, codeForcesResponse[i], false, 0);
+                response = "";
+                for (int i = 0; i < codeforcesResponse.size(); i++) {
+                    response += codeforcesResponse[codeforcesResponse.size() - 1 - i] + "\n";   
                 }
+                bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
                 response = cp1251_to_utf8("Контесты доступны тут:");
                 bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
                 string link = "https://codeforces.com/contests";
@@ -257,44 +258,21 @@ int main() {
     {
     if (query->data == "Conf")
     {
-        getProblemsByTags(problems,themes);
-        cout << problems.size() << " " << themes.size() << endl;
-        if (problems.size() != 0)
+        if (themes.size() > 0)
         {
-            if (problems.size() / 10 > 0)
+            getProblemsByTags(problems, themes);
+            cout << problems.size() << " " << themes.size() << endl;
+            if (problems.size() != 0)
             {
-            string response = cp1251_to_utf8("Первые 10 проблем доступны тут:");
-            bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
-            for (int i = 0; i < 10; i++) {
-                response = format("https://codeforces.com/problemset/problem/{}", problems[i]);
+                if (problems.size() / 10 > 0)
+                {
+                string response = cp1251_to_utf8("Первые 10 проблем доступны тут:");
                 bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
-            }
-
-            string req = "https://codeforces.com/problemset?tags=";
-            for (int i = 0; i < themes.size(); i++)
-            {
-                if (i == themes.size() - 1)
-                {
-                    req += themes[i];
+                response = "";
+                for (int i = 0; i < 10; i++) {
+                    response += format("https://codeforces.com/problemset/problem/{}", problems[i]) + "\n";
                 }
-                else
-                {
-                    req += themes[i] + ",";
-                }
-            }
-            response = cp1251_to_utf8("Остальные проблемы расположены тут:");
-            bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
-            bot.getApi().sendMessage(query->message->chat->id, req, false, 0, keyboardCF);
-            }
-            else
-            {
-                string response;
-                for (int i = 0; i < problems.size(); i++)
-                {
-                    response = format("https://codeforces.com/problemset/problem/{}", problems[i]);
-                    bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
-                }
-
+                bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
                 string req = "https://codeforces.com/problemset?tags=";
                 for (int i = 0; i < themes.size(); i++)
                 {
@@ -306,18 +284,51 @@ int main() {
                     {
                         req += themes[i] + ",";
                     }
-            }
+                }
+                response = cp1251_to_utf8("Остальные проблемы расположены тут:");
+                bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
+                bot.getApi().sendMessage(query->message->chat->id, req, false, 0, keyboardCF);
+                }
+                else
+                {
+                    string response = "";
+                    for (int i = 0; i < problems.size(); i++)
+                    {
+                        response += format("https://codeforces.com/problemset/problem/{}", problems[i]) + "\n";
+                    }
+                    bot.getApi().sendMessage(query->message->chat->id, response, false, 0);
 
-            bot.getApi().sendMessage(query->message->chat->id, req, false, 0, keyboardCF);
+                    string req = "https://codeforces.com/problemset?tags=";
+                    for (int i = 0; i < themes.size(); i++)
+                    {
+                        if (i == themes.size() - 1)
+                        {
+                            req += themes[i];
+                        }
+                        else
+                        {
+                            req += themes[i] + ",";
+                        }
+                }
+
+                bot.getApi().sendMessage(query->message->chat->id, req, false, 0, keyboardCF);
+                }
             }
-        }
+            else
+            {
+                    string response = cp1251_to_utf8("Нет задач по таким тегам");
+                    bot.getApi().sendMessage(query->message->chat->id, response, false, 0, keyboardCF);
+            }
+            problems.clear();
+            themes.clear(); 
+            }
         else
         {
-                string response = cp1251_to_utf8("Нет задач по таким тегам");
-                bot.getApi().sendMessage(query->message->chat->id, response, false, 0, keyboardCF);
+            problems.clear();
+            themes.clear();
         }
-        problems.clear();
-        themes.clear(); 
+        
+        
     }
     });
 
